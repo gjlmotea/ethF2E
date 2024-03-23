@@ -1,10 +1,5 @@
-<div class="container">
-  <div class="row">
-    <input type="text" pInputText [(ngModel)]="value" />
-  </div>
+<div class="container pt-4">
+  <p-steps [model]="items" [readonly]="false"></p-steps>
 </div>
 
-
-<div class="container tw-bg-amber-300 ">
-  Lorem ipsum dolor sit amet.
-</div>
+<router-outlet></router-outlet>
