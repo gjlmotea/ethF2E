@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { ChipsModule } from 'primeng/chips';
+import { PromptService } from '../service/prompt.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-prompt',
@@ -9,14 +11,62 @@ import { ChipsModule } from 'primeng/chips';
   imports: [
     FormsModule,
     ButtonModule,
-    ChipsModule
+    ChipsModule,
+    ReactiveFormsModule
   ],
   templateUrl: './prompt.component.html',
-  styleUrl: './prompt.component.scss'
+  styleUrl: './prompt.component.scss',
+  providers: [PromptService]
+
 })
 export class PromptComponent {
-  value: any;
-  constructor() {
+  loading: boolean = false;
+
+  form: FormGroup = this.fb.group({
+    prompt: ['', [Validators.required]],
+  });
+
+  constructor(
+    private messageService: MessageService,
+    private fb: FormBuilder,
+    private promptService: PromptService,
+  ) {
+
   }
 
+  submit() {
+    this.loading = true;
+
+    this.promptService.getData().subscribe({
+      next: (res) => {
+        this.loading = false;
+        console.log(res);
+      },
+      error: (err) => {
+        this.loading = false;
+        console.log(err);
+
+        this.messageService.add({
+          severity: 'error',
+          detail: 'Network Error',
+        });
+      }
+    });
+
+    this.promptService.postData(this.form.value).subscribe({
+      next: (res) => {
+        this.loading = false;
+        console.log(res);
+      },
+      error: (err) => {
+        this.loading = false;
+        console.log(err);
+
+        this.messageService.add({
+          severity: 'error',
+          detail: 'Network Error',
+        });
+      }
+    });
+  }
 }
