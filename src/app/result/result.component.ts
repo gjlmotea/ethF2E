@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
-import { MessageService } from 'primeng/api';
-import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { FieldsetModule } from 'primeng/fieldset';
 import { CardModule } from 'primeng/card';
 
 @Component({
@@ -15,15 +12,23 @@ import { CardModule } from 'primeng/card';
   styleUrl: './result.component.scss'
 })
 export class ResultComponent {
+  isSuccessful: boolean = false;
+  txId = '';
 
   constructor(
-    private messageService: MessageService,
     private route:ActivatedRoute,
   ) {
   }
 
   ngOnInit() {
-    console.log(this.route.snapshot.data)
+    console.log(this.route.snapshot.params)
+    let data = this.route.snapshot.params;
+    setTimeout(() => {
+      data = {status: '1n', txid: '0x12345678900x12345678900x12345678900x12345678900x12345678900x12345678900x12345678900x1234567890'};
+      this.isSuccessful = data['status'] === '1n';
+      this.txId = data['txid'];
+    }, 1000)
+
   }
 
 }

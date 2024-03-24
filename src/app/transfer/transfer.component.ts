@@ -67,10 +67,7 @@ export class TransferComponent {
         this.loading = false;
         console.log(err);
 
-        this.messageService.add({
-          severity: 'error',
-          detail: 'Network Error',
-        });
+        this.router.navigate(['/result', err]).then();
       }
     });
   }
