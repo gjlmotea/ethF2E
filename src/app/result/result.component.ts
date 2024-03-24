@@ -23,12 +23,9 @@ export class ResultComponent {
   ngOnInit() {
     console.log(this.route.snapshot.params)
     let data = this.route.snapshot.params;
-    setTimeout(() => {
-      data = {status: '1n', txid: '0x12345678900x12345678900x12345678900x12345678900x12345678900x12345678900x12345678900x1234567890'};
-      this.isSuccessful = data['status'] === '1n';
-      this.txId = data['txid'];
-    }, 1000)
 
+    this.isSuccessful = data[0] === '1n';
+    this.txId = data[1];
   }
 
 }
