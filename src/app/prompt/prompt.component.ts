@@ -4,6 +4,7 @@ import { ButtonModule } from 'primeng/button';
 import { ChipsModule } from 'primeng/chips';
 import { PromptService } from '../service/prompt.service';
 import { MessageService } from 'primeng/api';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-prompt',
@@ -29,6 +30,7 @@ export class PromptComponent {
   constructor(
     private messageService: MessageService,
     private fb: FormBuilder,
+    private router: Router,
     private promptService: PromptService,
   ) {
 
@@ -37,21 +39,23 @@ export class PromptComponent {
   submit() {
     this.loading = true;
 
-    this.promptService.getData().subscribe({
-      next: (res) => {
-        this.loading = false;
-        console.log(res);
-      },
-      error: (err) => {
-        this.loading = false;
-        console.log(err);
-
-        this.messageService.add({
-          severity: 'error',
-          detail: 'Network Error',
-        });
-      }
-    });
+    // this.promptService.getData().subscribe({
+    //   next: (res) => {
+    //     this.loading = false;
+    //     console.log(res);
+    //
+    //     this.router.navigate(['/transfer'], res).then();
+    //   },
+    //   error: (err) => {
+    //     this.loading = false;
+    //     console.log(err);
+    //
+    //     this.messageService.add({
+    //       severity: 'error',
+    //       detail: 'Network Error',
+    //     });
+    //   }
+    // });
 
     this.promptService.postData(this.form.value).subscribe({
       next: (res) => {
