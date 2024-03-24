@@ -39,28 +39,12 @@ export class PromptComponent {
   submit() {
     this.loading = true;
 
-    // this.promptService.getData().subscribe({
-    //   next: (res) => {
-    //     this.loading = false;
-    //     console.log(res);
-    //
-    //     this.router.navigate(['/transfer'], res).then();
-    //   },
-    //   error: (err) => {
-    //     this.loading = false;
-    //     console.log(err);
-    //
-    //     this.messageService.add({
-    //       severity: 'error',
-    //       detail: 'Network Error',
-    //     });
-    //   }
-    // });
-
     this.promptService.postData(this.form.value).subscribe({
       next: (res) => {
         this.loading = false;
         console.log(res);
+
+        this.router.navigate(['/transfer', res]).then();
       },
       error: (err) => {
         this.loading = false;
