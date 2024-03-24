@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, timeout } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -16,6 +16,8 @@ export class TransferService {
   }
 
   postData(data: any): Observable<any> {
-    return this.http.post(this.url, data, { withCredentials: false });
+    return this.http.post(this.url, data, { withCredentials: false }).pipe(
+      timeout(1000000)
+    );
   }
 }
